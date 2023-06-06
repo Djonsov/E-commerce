@@ -1,0 +1,234 @@
+{
+  "users": [
+    {
+      "login": "petrovp",
+      "password": "petrovp",
+      "name": "Petr",
+      "patronim": "Petrovich",
+      "surName": "Petrov",
+      "birthDate": "2023-05-06",
+      "phone": "88005553501",
+      "address": "Россия, Москва, ул. Пушкина, д. Колотушкина,2",
+      "email": "petrovpp@mail.ru"
+    },
+    {
+      "login": "ivanovi",
+      "password": "ivanovi",
+      "name": "Ivan",
+      "patronim": "Ivanovich",
+      "surName": "Ivanov",
+      "birthDate": "2023-05-05",
+      "phone": "88005553502",
+      "address": "Россия, Москва, ул. Пушкина, д. Колотушкина,1",
+      "email": "ivanovii@mail.ru"
+    },
+    {
+      "login": "sidorovs",
+      "password": "sidorovs",
+      "name": "Sergey",
+      "patronim": "Petrovich",
+      "surName": "Sidorov",
+      "birthDate": "2023-05-06",
+      "phone": "88005553503",
+      "address": "Россия, Москва, ул. Пушкина, д. Колотушкина,3",
+      "email": "sidorovsp@mail.ru"
+    },
+    {
+      "login": "krasnovae",
+      "password": "krasnovaea",
+      "name": "Екатерина",
+      "patronim": "Алексеевна",
+      "surName": "Краснова",
+      "birthDate": "2023-05-07",
+      "phone": "88005553504",
+      "address": "Россия, Москва, ул. Пушкина, д. Колотушкина,4",
+      "email": "krasnovaea@mail.ru"
+    },
+    {
+      "login": "mironovam",
+      "password": "mironovam",
+      "name": "Мира",
+      "patronim": "Мироновна",
+      "surName": "Лебедева",
+      "birthDate": "2023-05-07",
+      "phone": "88005553505",
+      "address": "Россия, Москва, ул. Пушкина, д. Колотушкина,5",
+      "email": "mironovam@mail.ru"
+    },
+    {
+      "login": "isaevm",
+      "password": "isaevm",
+      "name": "Михаил",
+      "patronim": "Владимирович",
+      "surName": "Исаев",
+      "birthDate": "2023-05-07",
+      "phone": "88005553506",
+      "address": "Россия, Москва, ул. Пушкина, д. Колотушкина,6",
+      "email": "isaevm@mail.ru"
+    },
+    {
+      "login": "gorelovav",
+      "password": "gorelovav",
+      "name": "Василиса",
+      "patronim": "Павловна",
+      "surName": "Горелова",
+      "birthDate": "2023-05-07",
+      "phone": "88005553507",
+      "address": "Россия, Москва, ул. Пушкина, д. Колотушкина,7",
+      "email": "gorelovav@mail.ru"
+    },
+    {
+      "login": "tolkachevaa",
+      "password": "tolkachevaa",
+      "name": "Алиса",
+      "patronim": "Максимовна",
+      "surName": "Толкачева",
+      "birthDate": "2023-05-07",
+      "phone": "88005553508",
+      "address": "Россия, Москва, ул. Пушкина, д. Колотушкина,8",
+      "email": "tolkachevaa@mail.ru"
+    },
+    {
+      "login": "sobolevm",
+      "password": "sobolevm",
+      "name": "Михаил",
+      "patronim": "Дмитриевич",
+      "surName": "Соболев",
+      "birthDate": "2023-05-07",
+      "phone": "88005553509",
+      "address": "Россия, Москва, ул. Пушкина, д. Колотушкина,9",
+      "email": "sobolevm@mail.ru"
+    },
+    {
+      "login": "chernihs",
+      "password": "chernihs",
+      "name": "Сергей",
+      "patronim": "Матвеевич",
+      "surName": "Черных",
+      "birthDate": "2023-05-07",
+      "phone": "88005553510",
+      "address": "Россия, Москва, ул. Пушкина, д. Колотушкина,10",
+      "email": "chernihs@mail.ru"
+    }
+  ],
+  "films": [
+    {
+      "title" : "Пираты Карибского моря: Проклятие Черной жемчужины",
+      "premierDate": "2003-06-28",
+      "genre": "0",
+      "country": "США"
+    },
+    {
+      "title" : "Гарри Поттер и философский камень",
+      "premierDate": "2003-11-04",
+      "genre": "0",
+      "country": "Великобритания, США"
+    }
+  ],
+  "directors": [
+    {"directorsFio":"Гор Вербински",
+      "position": "Режиссер"
+    }
+  ],
+  "items": [
+    {
+      "color": "black",
+      "price": 500,
+      "size": 48,
+      "title": "Футболка мужская",
+      "image": "1"
+    },
+    {
+      "color": "white",
+      "price": 500,
+      "size": 48,
+      "title": "Футболка мужская",
+      "image": "2"
+    },
+    {
+      "color": "black",
+      "price": 500,
+      "size": 46,
+      "title": "Футболка женская",
+      "image": "3"
+    },
+    {
+      "color": "white",
+      "price": 500,
+      "size": 46,
+      "title": "Футболка женская",
+      "image": "4"
+    },
+    {
+      "color": "black",
+      "price": 1500,
+      "size": 48,
+      "title": "Штаны мужские",
+      "image": "5"
+    },
+    {
+      "color": "white",
+      "price": 500,
+      "size": 48,
+      "title": "Штаны мужские",
+      "image": "6"
+    },
+    {
+      "color": "black",
+      "price": 1500,
+      "size": 46,
+      "title": "Штаны женские",
+      "image": "7"
+    },
+    {
+      "color": "white",
+      "price": 1500,
+      "size": 46,
+      "title": "Штаны женские",
+      "image": "8"
+    },
+    {
+      "color": "black",
+      "price": 1000,
+      "size": 48,
+      "title": "Рубашка мужская",
+      "image": "9"
+    },
+    {
+      "color": "white",
+      "price": 1000,
+      "size": 48,
+      "title": "Рубашка мужская",
+      "image": "10"
+    },
+    {
+      "color": "blue",
+      "price": 1000,
+      "size": 48,
+      "title": "Рубашка мужская",
+      "image": "11"
+    },
+    {
+      "color": "white",
+      "price": 1000,
+      "size": 46,
+      "title": "Рубашка женская",
+      "image": "12"
+    },
+    {
+      "color": "black",
+      "price": 1200,
+      "size": 48,
+      "title": "Лонгслив мужской",
+      "image": "13"
+    },
+    {
+      "color": "black",
+      "price": 1200,
+      "size": 46,
+      "title": "Лонгслив женский",
+      "image": "14"
+    }
+  ]
+}
+

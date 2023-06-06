@@ -1,0 +1,19 @@
+#docker-compose up
+version: "3.9"
+services:
+  postgres:
+    container_name: ecomPostgresSQLDB
+    image: postgres
+    environment:
+      POSTGRES_DB: "local_db"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - "5432:5432"
+    networks:
+      java15-network:
+        aliases:
+          - java15db
+networks:
+  java15-network:
+    name: 'our_java15_network'

@@ -1,0 +1,21 @@
+# docker-compose up
+version: "3.9"
+services:
+  deploy:
+    container_name: java15app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://ecomPostgresSQLDB:5432/local_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    networks:
+      java15-network:
+        aliases:
+          - java15app
+networks:
+  java15-network:
+    name: 'our_java15_network'
