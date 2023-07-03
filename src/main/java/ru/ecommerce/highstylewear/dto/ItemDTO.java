@@ -16,5 +16,6 @@ public class ItemDTO extends GenericDTO {
     private Integer size;
     private String title;
     private String image;
+    //private String imagePath;
     private List<Long> ordersIds;
 }

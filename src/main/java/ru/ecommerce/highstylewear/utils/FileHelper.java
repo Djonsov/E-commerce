@@ -28,7 +28,7 @@ public class FileHelper {
                 Files.createDirectories(path);
             }
             Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-            //Будет сохранен полный путь до файла от самого корня
+
             resultName = path.toString();
         } catch (IOException e) {
             throw new RuntimeException(e);

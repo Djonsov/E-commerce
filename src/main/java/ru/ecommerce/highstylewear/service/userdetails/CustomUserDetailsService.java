@@ -41,7 +41,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         else {
             User user = userRepository.findUserByLogin(username);
             List<GrantedAuthority> authorities = new ArrayList<>();
-            //ROLE_USER, ROLE_LIBRARIAN
             authorities.add(new SimpleGrantedAuthority(user.getRole().getId() == 1L ? "ROLE_" + UserRolesConstants.USER :
                     "ROLE_" + UserRolesConstants.STUFF));
             return new CustomUserDetails(user.getId().longValue(), username, user.getPassword(), authorities);

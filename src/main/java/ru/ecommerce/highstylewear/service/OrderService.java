@@ -1,17 +1,15 @@
 package ru.ecommerce.highstylewear.service;
 
 import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.context.Context;
+import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.spring5.SpringTemplateEngine;
+import ru.ecommerce.highstylewear.dto.GenericDTO;
 import ru.ecommerce.highstylewear.dto.ItemDTO;
 import ru.ecommerce.highstylewear.dto.OrderDTO;
 import ru.ecommerce.highstylewear.dto.UserDTO;
@@ -20,10 +18,10 @@ import ru.ecommerce.highstylewear.mapper.GenericMapper;
 import ru.ecommerce.highstylewear.model.Item;
 import ru.ecommerce.highstylewear.model.Order;
 import ru.ecommerce.highstylewear.repository.GenericRepository;
+import ru.ecommerce.highstylewear.repository.ItemRepository;
 import ru.ecommerce.highstylewear.repository.OrderRepository;
 import ru.ecommerce.highstylewear.utils.MailUtils;
 
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,7 +29,10 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class OrderService extends GenericService<Order, OrderDTO> {
+    private final GenericRepository itemRepository;
     private final GenericRepository userRepository;
+
+    private final ItemService itemService;
 
 
     private final SpringTemplateEngine springTemplateEngine;
@@ -41,14 +42,17 @@ public class OrderService extends GenericService<Order, OrderDTO> {
     private final UserService userService;
     private final OrderRepository orderRepository;
 
-    public OrderService(GenericRepository<Order> repository, GenericMapper<Order, OrderDTO> mapper, SpringTemplateEngine springTemplateEngine, UserService userService, OrderRepository orderRepository,
-                        @Qualifier("userRepository") GenericRepository userRepository, JavaMailSender javaMailSender) {
+    public OrderService(GenericRepository<Order> repository, GenericMapper<Order, OrderDTO> mapper, ItemService itemService, SpringTemplateEngine springTemplateEngine, UserService userService, OrderRepository orderRepository,
+                        @Qualifier("userRepository") GenericRepository userRepository, JavaMailSender javaMailSender,
+                        @Qualifier("itemRepository") GenericRepository itemRepository) {
         super(repository, mapper);
+        this.itemService = itemService;
         this.springTemplateEngine = springTemplateEngine;
         this.userService = userService;
         this.orderRepository = orderRepository;
         this.userRepository = userRepository;
         this.javaMailSender = javaMailSender;
+        this.itemRepository = itemRepository;
     }
 
     public List<OrderDTO> getAllUsersOrders(Long userId) {
@@ -63,45 +67,42 @@ public class OrderService extends GenericService<Order, OrderDTO> {
         return newOrder;
     }
 
-    public OrderDTO placeOrder(List<ItemDTO> items){
+    public OrderDTO placeOrder(List<ItemDTO> items) throws MessagingException {
         UserDTO userDTO = userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setUser(userDTO.getId());
         orderDTO.setDetails("online");
-        orderDTO.setItemsIds(items.stream().map(m->m.getId()).collect(Collectors.toList()));
+        orderDTO.setItemsIds(items.stream().map(GenericDTO::getId).collect(Collectors.toList()));
         orderDTO.setCreatedWhen(LocalDateTime.now());
         orderDTO.setCreatedBy(userDTO.getLogin());
-
-        return mapper.toDTO(orderRepository.save(mapper.toEntity(orderDTO)));
+        mapper.toDTO(orderRepository.save(mapper.toEntity(orderDTO)));
+        sendOrder(orderDTO);
+        return orderDTO;
     }
 
     public void sendOrder(OrderDTO orderDTO) throws MessagingException {
         UserDTO userDTO = userService.getById(orderDTO.getUser());
+        Double total = 0D;
 
-        MimeMessage message = javaMailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message,MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
-                StandardCharsets.UTF_8.name());
+        List<Long> itemIds = orderDTO.getItemsIds();
+        List<Item> items = itemRepository.findAllById(itemIds);
+        for (Item item : items) {
+            total += item.getPrice();
+        }
 
-        Context context = new Context();
-        context.setVariable("order", mapper.toEntity(orderDTO));
-        context.setVariable("total", mapper.toEntity(orderDTO).getItems().stream().mapToDouble(Item::getPrice).sum());
+        SimpleMailMessage simpleMailMessage = MailUtils.crateMailMessage(userDTO.getEmail(),
+                "fromemail@yandex.ru",
+                "Заказ в магазине " ,
+                String.format("""
+                        Здравствуйте.
+                        Вы заказали товар в магазине на сумму %f рублей.
+                        В ближайшее время с вами в WhatsUp свяжется администратор с уточнениями по оплате и доставке
+                                                
+                                                
+                        """, total));
 
-        String html = springTemplateEngine.process("order",context);
 
-        helper.setTo("djekadjonsov@yandex.ru");
-        helper.setText(html, true);
-        helper.setSubject("Заказ № " + orderDTO.getId());
-        helper.setFrom("djekadjonsov@yandex.ru");
-        javaMailSender.send(message);
-
-//        SimpleMailMessage simpleMailMessage = MailUtils.crateMailMessage(//userDTO.getEmail(),
-//                "djekadjonsov@yandex.ru",
-//                "djekadjonsov@yandex.ru",
-//                "Заказ № " + orderDTO.getId(),
-//                html);
-//
-//
-//        javaMailSender.send(simpleMailMessage);
+        javaMailSender.send(simpleMailMessage);
         log.info("-------MAIL SEND-------");
     }
 
@@ -113,14 +114,9 @@ public class OrderService extends GenericService<Order, OrderDTO> {
         } else {
             throw new OrderDeleteException();
         }
-
     }
 
     private boolean checkOrderForDelete(Long id) {
         return orderRepository.getById(id).getCreatedWhen().plusYears(5).isBefore(LocalDateTime.now());
     }
-
-
-
-
 }

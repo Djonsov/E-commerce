@@ -31,6 +31,9 @@ public class Item extends GenericModel {
     @Column(name = "image", nullable = false)
     private String image;
 
+//    @Column(name = "image_path")
+//    private String imagePath;
+
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinTable(name = "orders_items",
             joinColumns = @JoinColumn(name = "item_id", foreignKey = @ForeignKey(name = "FK_ITEMS_ORDERS")),

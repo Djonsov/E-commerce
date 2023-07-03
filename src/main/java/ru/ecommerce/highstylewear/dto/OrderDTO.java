@@ -12,7 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class OrderDTO extends GenericDTO{
-
     private String details;
     private Long user;
     private List<Long> itemsIds;

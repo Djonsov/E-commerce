@@ -18,14 +18,11 @@ import java.util.stream.Collectors;
 @Component
 public class OrderMapper extends GenericMapper<Order, OrderDTO> {
     private final UserRepository userRepository;
-
-    private final UserService userService;
     private final ItemRepository itemRepository;
 
-    protected OrderMapper(ModelMapper modelMapper, UserRepository userRepository, UserService userService, ItemRepository itemRepository) {
+    protected OrderMapper(ModelMapper modelMapper, UserRepository userRepository, ItemRepository itemRepository) {
         super(Order.class, OrderDTO.class, modelMapper);
         this.userRepository = userRepository;
-        this.userService = userService;
         this.itemRepository = itemRepository;
     }
 

@@ -4,7 +4,9 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,12 @@ import ru.ecommerce.highstylewear.model.Item;
 import ru.ecommerce.highstylewear.repository.ItemRepository;
 import ru.ecommerce.highstylewear.service.GenericService;
 import ru.ecommerce.highstylewear.service.ItemService;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Slf4j
 @RestController
@@ -33,12 +41,6 @@ public class ItemController extends GenericController<Item, ItemDTO> {
     public ResponseEntity<?> getAllNotDeleted(){
         return ResponseEntity.status(HttpStatus.OK).body(itemService.getAllNotDeleted());
     }
-
-//    @Override
-//    @GetMapping("/getById/{id}")
-//    public ResponseEntity<ItemDTO> getById(@PathVariable Long id) {
-//        return super.getById(id);
-//    }
 
     @Override
     @PostMapping("/add")

@@ -21,13 +21,12 @@ public class BucketMapper extends GenericMapper<Bucket, BucketDTO> {
 
     private final ItemRepository itemRepository;
 
-    private final ItemService itemService;
+
 
     protected BucketMapper(ModelMapper modelMapper,
-                           @Qualifier("itemRepository") ItemRepository itemRepository, ItemService itemService) {
+                           @Qualifier("itemRepository") ItemRepository itemRepository) {
         super(Bucket.class, BucketDTO.class, modelMapper);
         this.itemRepository = itemRepository;
-        this.itemService = itemService;
     }
 
     @Override
@@ -54,7 +53,6 @@ public class BucketMapper extends GenericMapper<Bucket, BucketDTO> {
 
     @Override
     protected void mapSpecificFields(Bucket source, BucketDTO destination) {
-        //destination.setItemsIds(getIds(source));
         List<ItemDTO> items = new ArrayList<>();
 
         for (Item item : source.getItems()) {

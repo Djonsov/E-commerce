@@ -33,6 +33,7 @@ public abstract class GenericController<T extends GenericModel, N extends Generi
         this.service = genericService;
     }
 
+    @CrossOrigin
     @Operation(description = "Получить запись по ID", method = "getById")
     @RequestMapping(value = "/getById", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<N> getById(@RequestParam(value = "id") Long id){
@@ -65,8 +66,7 @@ public abstract class GenericController<T extends GenericModel, N extends Generi
         return ResponseEntity.status(HttpStatus.OK).body(service.update(updatedEntity));
     }
 
-    //localhost:8080/authors/delete?id=1 - @RequestParam
-    //localhost:8080/authors/delete/1 - @PathVariable
+
     @Operation(description = "Удалить запись", method = "delete")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable(value = "id") Long id) {

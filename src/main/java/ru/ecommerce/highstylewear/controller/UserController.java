@@ -48,10 +48,8 @@ public class UserController extends GenericController<User, UserDTO> {
 
     @PostMapping("/auth")
     public ResponseEntity<?> auth(@RequestBody LoginDTO loginDTO) {
-        log.info("-----------------LOGINDTO------------->" + loginDTO.getLogin());
         Map<String, Object> response = new HashMap<>();
         UserDetails foundUser = customUserDetailsService.loadUserByUsername(loginDTO.getLogin());
-        log.info("foundUser {}", foundUser.toString());
         if (!userService.checkPassword(loginDTO.getPassword(), foundUser)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ошибка авторизации! \n Неверный логин или пароль");
         }
@@ -65,27 +63,6 @@ public class UserController extends GenericController<User, UserDTO> {
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-
-//    @PostMapping("/registration")
-//    public ResponseEntity<?> register(@RequestBody RegisterDTO dto) {
-//        try {
-//            if (userService.getUserByLogin(dto.getLogin()) != null)
-//                throw new LoginRegisteredException();
-//            else {
-//                if (userService.getUserByEmail(dto.getEmail()) != null)
-//                    throw new EmailRegisteredException();
-//                else
-//                    return ResponseEntity.ok().body(userService.register(dto));
-//            }
-//        } catch (EmailRegisteredException e) {
-//            log.error(e.getMessage()  + "(" + dto.getEmail() + ")");
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(EMAIL_REGISTERED_ERROR_MESSAGE + "(" + dto.getEmail() + ")");
-//        } catch (LoginRegisteredException e) {
-//            log.error(e.getMessage() + "(" + dto.getLogin() + ")");
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(LOGIN_REGISTERED_ERROR_MESSAGE + "(" + dto.getLogin() + ")");
-//        }
-//
-//    }
 
     @CrossOrigin
     @PostMapping("/registration")
@@ -106,14 +83,13 @@ public class UserController extends GenericController<User, UserDTO> {
         return ResponseEntity.status(HttpStatus.OK).body(userService.createStuff(newEntity));
     }
 
-
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable("id") Long id) {
         userService.deleteSoft(id);
     }
 
     @PostMapping("/remember-password")
-    public ResponseEntity<?> rememberPassword(@RequestBody UserDTO userDTO) {//адрес электронной почты
+    public ResponseEntity<?> rememberPassword(@RequestBody UserDTO userDTO) {
         userDTO = userService.getUserByEmail(userDTO.getEmail());
         if (Objects.isNull(userDTO)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Пользователь с таким адресом электронной почты не зарегистрирован");

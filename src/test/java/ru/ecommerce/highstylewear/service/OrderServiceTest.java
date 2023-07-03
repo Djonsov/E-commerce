@@ -7,11 +7,10 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.mockito.Mockito;
 import org.springframework.mail.javamail.JavaMailSender;
 import ru.ecommerce.highstylewear.dto.OrderDTO;
-import ru.ecommerce.highstylewear.dto.UserDTO;
 import ru.ecommerce.highstylewear.exception.DeleteException;
 import ru.ecommerce.highstylewear.mapper.OrderMapper;
 import ru.ecommerce.highstylewear.model.Order;
-import ru.ecommerce.highstylewear.model.User;
+import ru.ecommerce.highstylewear.repository.ItemRepository;
 import ru.ecommerce.highstylewear.repository.OrderRepository;
 import ru.ecommerce.highstylewear.repository.UserRepository;
 
@@ -30,7 +29,9 @@ public class OrderServiceTest extends GenericTest<Order, OrderDTO> {
         UserService userService = Mockito.mock(UserService.class);
         UserRepository userRepository = Mockito.mock(UserRepository.class);
         JavaMailSender javaMailSender = Mockito.mock(JavaMailSender.class);
-        service = new OrderService(repository,mapper,null, userService,(OrderRepository) repository,userRepository,javaMailSender);
+        ItemService itemService = Mockito.mock(ItemService.class);
+        ItemRepository itemRepository = Mockito.mock(ItemRepository.class);
+        service = new OrderService(repository,mapper, itemService, null, userService,(OrderRepository) repository,userRepository,javaMailSender,itemRepository);
     }
 
     @Test

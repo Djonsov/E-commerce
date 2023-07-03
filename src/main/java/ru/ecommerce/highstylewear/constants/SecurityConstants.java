@@ -10,10 +10,10 @@ public interface SecurityConstants {
             "/",
             "/swagger-ui/**",
             "/webjars/bootstrap/5.0.2/**",
-            "/v3/api-docs/**");
+            "/v3/api-docs/**",
+            "/actuator/**");
 
-    List<String> ITEMS_REST_WHITE_LIST = List.of("api/rest/items",
-            "api/rest/items/search",
+    List<String> ITEMS_REST_WHITE_LIST = List.of("api/rest/items/**",
             "api/rest/items/{id}");
 
     List<String> BUCKETS_REST_WHITE_LIST = List.of("/api/rest/buckets/**");

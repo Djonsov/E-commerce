@@ -4,11 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 
 public class MailUtils {
-
-
-    private MailUtils() {
-
-    }
+    private MailUtils() {}
 
     public static SimpleMailMessage crateMailMessage(final String email,
                                                      final String from,

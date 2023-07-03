@@ -19,9 +19,7 @@ public class ItemService extends GenericService<Item, ItemDTO> {
         super(repository, mapper);
     }
 
-    public ItemDTO create(final ItemDTO newItem/*, MultipartFile file*/){
-        //String fileName = FileHelper.createFile(file);
-        //newItem.setImage(fileName);
+    public ItemDTO create(final ItemDTO newItem){
 
         newItem.setCreatedWhen(LocalDateTime.now());
         newItem.setCreatedBy(SecurityContextHolder.getContext().getAuthentication().getName());

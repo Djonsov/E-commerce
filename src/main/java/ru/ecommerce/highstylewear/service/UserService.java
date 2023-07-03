@@ -121,7 +121,6 @@ public class UserService extends GenericService<User, UserDTO> {
         update(userDTO);
     }
 
-
     public boolean checkEmailForRegistration(String email){
         return !Objects.isNull(getUserByEmail(email));
     }

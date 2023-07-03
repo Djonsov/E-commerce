@@ -162,5 +162,27 @@ public class ItemControllerTest extends CommonRestTest {
         log.info("Данные очищены!");
     }
 
+    @Test
+    @Order(4)
+    protected void getAllNotDeleted() throws Exception {
+        log.info("Тест по просмотру всех актуальных предметов одежды через REST начат");
+        String result = mvc.perform(
+                        MockMvcRequestBuilders.get("http://localhost:8080/api/rest/items")
+                                .headers(super.headers)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$.*", hasSize(greaterThan(0))))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        List<ItemDTO> itemsDTO = objectMapper.readValue(result, new TypeReference<List<ItemDTO>>() {
+        });
+        itemsDTO.forEach(a -> log.info(a.toString()));
+        log.info("Тест по просмотру всех актуальных предметов одежды через REST закончен");
+    }
+
 
 }
